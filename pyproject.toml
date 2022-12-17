@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "auto-monitor-switcher"
+version = "0.1.0"
+description = "Switches monitor profiles automatically while Nvidia is streaming through GameStream."
+authors = ["Rui Antunes <rui.andre.antunes@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = []
+
+[tool.poetry.dependencies]
+python = "~3.11"
+psutil = "^5.9.4"
+
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^5.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
