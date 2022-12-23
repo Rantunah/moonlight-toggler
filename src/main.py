@@ -1,10 +1,10 @@
-import psutil
 import subprocess
-import tomllib
-
 from dataclasses import dataclass
 from pathlib import Path
+from time import sleep
 
+import psutil
+import tomllib
 
 PROCESS = "nvstreamer.exe"
 
@@ -20,7 +20,10 @@ class Settings:
         self.executable_path = Path(config["executable"]["path"])
         self.profile_path = Path(config["profile"]["path"])
         self.tv_profile = self.profile_path / Path(config["profile"]["name"]["tv"])
-        self.desktop_profile = self.profile_path / Path(config["profile"]["name"]["desktop"])
+        self.desktop_profile = self.profile_path / Path(
+            config["profile"]["name"]["desktop"]
+        )
+
 
 @dataclass
 class Commands:
@@ -63,7 +66,7 @@ def main():
             nvidia_process.wait()
             subprocess.run(commands.tv)
         else:
-            continue
+            sleep(2)
 
 
 if __name__ == "__main__":
