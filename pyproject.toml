@@ -1,9 +1,9 @@
 [tool.poetry]
-name = "auto-monitor-switcher"
+name = "moonlight-toggler"
 version = "0.1.0"
 description = "Switches monitor profiles automatically while Nvidia is streaming through GameStream."
 authors = ["Rui Antunes <rui.andre.antunes@gmail.com>"]
-license = "MIT"
+license = "MPL v2.0"
 readme = "README.md"
 packages = []
 
