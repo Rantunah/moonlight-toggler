@@ -6,39 +6,42 @@ from time import sleep
 import psutil
 import tomllib
 
-PROCESS = "nvstreamer.exe"
+STREAM_PROCESS = "nvstreamer.exe"
+EXECUTABLE = "MonitorSwitcher.exe"
 
 
 @dataclass
 class Settings:
-    executable_path = None
-    profile_path = None
-    tv_profile = None
-    remote_desktop_profile = None
+    executable_path = None | Path
+    profile_path = None | Path
+    monitor_profile = None | Path
+    remote_profile = None | Path
 
     def set_config(self, config):
-        self.executable_path = Path(config["executable"]["path"])
-        self.profile_path = Path(config["profile"]["path"])
-        self.tv_profile = self.profile_path / Path(config["profile"]["name"]["tv"])
-        self.desktop_profile = self.profile_path / Path(
-            config["profile"]["name"]["desktop"]
-        )
+        self.executable_path = Path(config["executable"]["path"]).resolve() / EXECUTABLE
+        self.profile_path = Path(f"{config['profile']['path']}").resolve()
+        self.monitor_profile = Path(
+            f"{self.profile_path}/{config['profile']['name']['monitor']}.xml"
+        ).resolve()
+        self.remote_profile = Path(
+            f"{self.profile_path}/{config['profile']['name']['remote']}.xml"
+        ).resolve()
 
 
 @dataclass
 class Commands:
-    tv: str = ""
-    desktop: str = ""
-    extended_displays: str = ""
+    monitor: str = ""
+    remote: str = ""
+    extended: str = ""
 
     def make_commands(self, settings):
-        self.tv = f"{settings.executable_path} -load:{settings.tv_profile}"
-        self.desktop = f"{settings.executable_path} -load:{settings.desktop_profile}"
+        self.monitor = f"{settings.executable_path} -load:{settings.monitor_profile}"
+        self.remote = f"{settings.executable_path} -load:{settings.remote_profile}"
 
 
 def load_config():
-    current_dir = Path(__file__).resolve().parent
-    config_path = current_dir.joinpath("config.toml")
+    current_dir = Path(__file__).resolve()
+    config_path = current_dir.parents[1] / "config.toml"
     with open(config_path, "rb") as config_file:
         config = tomllib.load(config_file)
     return config
@@ -52,19 +55,19 @@ def main():
     commands = Commands()
     commands.make_commands(settings)
 
-    subprocess.run(commands.tv)
+    subprocess.run(commands.monitor)
     while True:
         streaming = False
         for process in psutil.process_iter(["name"]):
-            if process.name() == PROCESS:
+            if process.name() == STREAM_PROCESS:
                 streaming = True
                 pid = process.pid
                 break
         if streaming:
             nvidia_process = psutil.Process(pid)
-            subprocess.run(commands.desktop)
+            subprocess.run(commands.remote)
             nvidia_process.wait()
-            subprocess.run(commands.tv)
+            subprocess.run(commands.monitor)
         else:
             sleep(2)
 

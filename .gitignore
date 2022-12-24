@@ -1,5 +1,6 @@
 ## Project Specific ##
 log/
+profiles/
 
 ### Python ###
 # Byte-compiled / optimized / DLL files

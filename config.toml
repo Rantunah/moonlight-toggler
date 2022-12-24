@@ -1,0 +1,9 @@
+[executable]
+path = "bin"
+
+[profile]
+path = "profiles"
+
+[profile.name]
+monitor = "monitor"
+remote = "remote"

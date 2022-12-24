@@ -1,9 +1,0 @@
-[executable]
-path = "C:/Users/ruiantunes/AppData/Local/MonitorSwitcher/MonitorSwitcher.exe"
-
-[profile]
-path = "C:/Users/ruiantunes/AppData/Roaming/MonitorSwitcher/Profiles"
-
-[profile.name]
-tv = "TV.xml"
-desktop = "Desktop.xml"
