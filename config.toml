@@ -1,8 +1,8 @@
 [executable]
-path = "bin"
+path = "..\\bin"
 
 [profile]
-path = "profiles"
+path = "..\\profiles"
 
 [profile.name]
 monitor = "monitor"
