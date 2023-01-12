@@ -144,6 +144,7 @@ def get_gamestream_pid() -> int:
 
 
 def main():
+    """Main program logic"""
     settings = Settings()
     # Load settings from the 'config.toml' and set the class attributes with that data
     config = load_config_file()
@@ -175,12 +176,11 @@ def main():
                 subprocess.run(commands.monitor)
         # Loop that starts the toggle behaviour
         while not streaming:
-            if streaming:
-                subprocess.run(commands.remote)
+            # Checks if the streaming starts and breaks out of the loop as soon as it does
+            if check_gamestream_exists():
                 break
-            # Checks the TCP status for the configured port toggles the stream at the
-            # earliest possible(tm) time
-            streaming = check_port(CONNECTED)
+            # Time interval between checks to keep the program light on resources
+            sleep(2)
 
 
 if __name__ == "__main__":
