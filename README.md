@@ -26,11 +26,11 @@ mkdir profiles
 
   1. In  Windows `Display settings`, setup the the physical monitor first, disable  the remote monitor and then run the command:
       ```powershell
-      .\bin\MonitorSwitcher.exe -save:.\profile\monitor.xml
+      .\bin\MonitorSwitcher.exe -save:.\profiles\monitor.xml
       ```
   2. Do the same, but this time for the remote monitor: 
       ```powershell
-      .\bin\MonitorSwitcher.exe -save:.\profile\remote.xml
+      .\bin\MonitorSwitcher.exe -save:.\profiles\remote.xml
       ```
 
 &nbsp;
